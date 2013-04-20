@@ -1,3 +1,5 @@
+; 0. Packages and bootstrapping
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 ;(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -12,6 +14,8 @@
 
 (dolist (p my-packages) (when (not (package-installed-p p)) (package-install p)))
 
+; 1. 
+
 (global-linum-mode t)
 
 (require 'auto-complete)
@@ -19,10 +23,16 @@
 
 (require 'evil)
 (evil-mode 1)
-(add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
+
+; Agda
 
 (load-file (let ((coding-system-for-read 'utf-8))
                 (shell-command-to-string "agda-mode locate")))
+(add-hook 'agda2-mode-hook (lambda () (setq agda2-include-dirs (quote ("." "/L/soft/agda2-lib")))))
+(add-hook 'agda2-mode-hook (lambda () (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))))
+
+;
+
 (setq x-select-enable-clipboard t)
 (menu-bar-mode 1)
 
@@ -30,22 +40,11 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 (add-to-list 'load-path "~/.emacs.d/plugins/emacs-haskell-unicode-input-method")
-;(add-to-list 'load-path "~/.emacs.d/plugins/emacs-eclim-0.2")
 
-;(require 'eclim)
-;(require 'eclimd)
-;(setq eclim-auto-save t)
-;(global-eclim-mode)
 
 ;; regular auto-complete initialization
 (require 'auto-complete-config)
 (ac-config-default)
-
-;; add the emacs-eclim source
-;(require 'ac-emacs-eclim-source)
-;(add-hook 'eclim-mode-hook (lambda ()
-;                             (add-to-list 'ac-sources 'ac-source-emacs-eclim)
-;                             (add-to-list 'ac-sources 'ac-source-emacs-eclim-c-dot)))
 
 (require 'rainbow-delimiters)
 (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
@@ -63,7 +62,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;'(eclim-executable "/L/soft/eclipse-indigo/eclim")
  '(markdown-command "~/.emacs.d/scripts/markdown-wrapper.sh")
  '(markdown-enable-math t))
 (custom-set-faces
