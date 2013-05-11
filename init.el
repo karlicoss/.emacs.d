@@ -49,9 +49,15 @@
 (require 'rainbow-delimiters)
 (add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
 
+; C/C++
 
 (setq c-default-style "bsd" c-basic-offset 4)
+(setq c-offsets-alist '((innamespace . [0])))
+; (defconst my-cc-style
+;   '("cc-mode"
+;     (c-offsets-alist . ((innamespace . [0])))))
 
+; (c-add-style "my-cc-mode" my-cc-style)
 
 (require 'markdown-mode)
 ;(require 'haskell-unicode-input-method)
@@ -62,12 +68,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(blink-cursor-mode nil)
  '(markdown-command "~/.emacs.d/scripts/markdown-wrapper.sh")
- '(markdown-enable-math t))
+ '(markdown-enable-math t)
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 120 :width normal)))))
 
