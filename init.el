@@ -4,7 +4,7 @@
 ; package module is required for emacs' packages manipulation
 ; it should be built-in in you distro emacs installation
 (require 'package)
-; melpa is the package repository for emacs packages
+; melpa is one of the package repositories for emacs packages
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
 
@@ -12,7 +12,8 @@
 (when (not package-archive-contents) (package-refresh-contents))
 
 ; we define a list of packages to install
-(defvar my-packages '(starter-kit evil haskell-mode ghc flymake-haskell-multi markdown-mode auto-complete) "List of packages to be downloaded")
+(defvar my-packages '(starter-kit evil haskell-mode ghc markdown-mode auto-complete) "List of packages to be downloaded")
+; TODO flymake-haskell-multi is not working at the moment for some reason (looks like MELPA's problem)
 
 ; running installation (pretty like 'apt-get install')
 (dolist (p my-packages) (when (not (package-installed-p p)) (package-install p)))
@@ -60,7 +61,7 @@
 (add-hook 'agda2-mode-hook (lambda () (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))))
 
 ; you'll need to change this variable to your agda stdlib location
-; you could comment out this line as well
+; you could just comment this line as well
 (add-hook 'agda2-mode-hook (lambda () (setq agda2-include-dirs (quote ("." "/L/soft/agda2-lib")))))
 
 ; Haskell
