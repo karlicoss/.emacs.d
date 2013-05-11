@@ -52,14 +52,23 @@
 
 ; Agda
 ; ====
+; 'cabal install Agda'
 
 (load-file (let ((coding-system-for-read 'utf-8))
                 (shell-command-to-string "agda-mode locate")))
-(add-hook 'agda2-mode-hook (lambda () (setq agda2-include-dirs (quote ("." "/L/soft/agda2-lib")))))
+; you'll definitely need this line to work both in evil-mode and agda-mode
 (add-hook 'agda2-mode-hook (lambda () (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))))
+
+; you'll need to change this variable to your agda stdlib location
+; you could comment out this line as well
+(add-hook 'agda2-mode-hook (lambda () (setq agda2-include-dirs (quote ("." "/L/soft/agda2-lib")))))
 
 ; Haskell
 ; =======
+
+; 'cabal install ghc-mod' to make it work
+(autoload 'ghc-init "ghc" nil t)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
 
 (require 'haskell-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
