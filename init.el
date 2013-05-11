@@ -1,82 +1,85 @@
-; 0. Packages and bootstrapping
+; Packages and bootstrapping
+; ==========================
 
+; package module is required for emacs' packages manipulation
+; it should be built-in in you distro emacs installation
 (require 'package)
+; melpa is the package repository for emacs packages
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-;(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-;                         ("marmalade" . "http://marmalade-repo.org/packages/")
-;                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 
-
+; updating packages index (pretty like 'apt-get update')
 (when (not package-archive-contents) (package-refresh-contents))
 
-(defvar my-packages '(starter-kit evil haskell-mode markdown-mode rainbow-delimiters auto-complete) "List of packages to be downloaded")
+; we define a list of packages to install
+(defvar my-packages '(starter-kit evil haskell-mode ghc flymake-haskell-multi markdown-mode auto-complete) "List of packages to be downloaded")
 
+; running installation (pretty like 'apt-get install')
 (dolist (p my-packages) (when (not (package-installed-p p)) (package-install p)))
 
-; 1. 
 
+; Some useful stuff
+; =================
+
+; line numbers
 (global-linum-mode t)
 
+; show matching parentheses
+(show-paren-mode t)
+
+; words auto completion
 (require 'auto-complete)
 (global-auto-complete-mode t)
 
+; TODO what that one for?
+; regular auto-complete initialization
+(require 'auto-complete-config)
+(ac-config-default)
+
+; evil 
 (require 'evil)
-(evil-mode 1)
+(evil-mode t)
+
+; enables interaction with system clipboard
+(setq x-select-enable-clipboard t)
+
+; TODO what this thing for?
+(menu-bar-mode 1)
+
+; highly recommended since default Ubuntu monospace font does not
+; render unicode properly
+(set-default-font "DejaVu Sans Mono-12")
 
 ; Agda
+; ====
 
 (load-file (let ((coding-system-for-read 'utf-8))
                 (shell-command-to-string "agda-mode locate")))
 (add-hook 'agda2-mode-hook (lambda () (setq agda2-include-dirs (quote ("." "/L/soft/agda2-lib")))))
 (add-hook 'agda2-mode-hook (lambda () (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))))
 
-;
-
-(setq x-select-enable-clipboard t)
-(menu-bar-mode 1)
+; Haskell
+; =======
 
 (require 'haskell-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 (add-to-list 'load-path "~/.emacs.d/plugins/emacs-haskell-unicode-input-method")
 
-
-;; regular auto-complete initialization
-(require 'auto-complete-config)
-(ac-config-default)
-
-(require 'rainbow-delimiters)
-(add-hook 'haskell-mode-hook 'rainbow-delimiters-mode)
-
 ; C/C++
+; =====
 
 (setq c-default-style "bsd" c-basic-offset 4)
+; prevents c++ mode from indenting code in namespace definition
+; that is, allows
+; namespace myns
+; {
+; int somefun()... // this line will not be indented
+; }
 (setq c-offsets-alist '((innamespace . [0])))
-; (defconst my-cc-style
-;   '("cc-mode"
-;     (c-offsets-alist . ((innamespace . [0])))))
+(setq markdown-command "~/.emacs.d/scripts/markdown-wrapper.sh")
 
-; (c-add-style "my-cc-mode" my-cc-style)
-
+; Markdown
+; ========
 (require 'markdown-mode)
-;(require 'haskell-unicode-input-method)
-;(add-hook 'haskell-mode-hook 
-;  (lambda () (set-input-method "haskell-unicode")))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(blink-cursor-mode nil)
- '(markdown-command "~/.emacs.d/scripts/markdown-wrapper.sh")
- '(markdown-enable-math t)
- '(show-paren-mode t)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :slant normal :weight normal :height 120 :width normal)))))
-
+(setq markdown-enable-math t)
