@@ -51,6 +51,11 @@
 ; render unicode properly
 (set-default-font "DejaVu Sans Mono-12")
 
+
+; (require 'whitespace)
+; (setq whitespace-style '(face empty tabs lines-tail trailing))
+; (global-whitespace-mode t)
+
 ; Agda
 ; ====
 ; 'cabal install Agda'
@@ -76,21 +81,31 @@
 
 (add-to-list 'load-path "~/.emacs.d/plugins/emacs-haskell-unicode-input-method")
 
+; Coq
+; ===
+
+(load-file "/L/soft/ProofGeneral-4.2/generic/proof-site.el")
+
 ; C/C++
 ; =====
 
-(setq c-default-style "bsd" c-basic-offset 4)
+; (setq c-default-style "bsd" c-basic-offset 4)
 ; prevents c++ mode from indenting code in namespace definition
 ; that is, allows
 ; namespace myns
 ; {
 ; int somefun()... // this line will not be indented
 ; }
-(setq c-offsets-alist '((innamespace . [0])))
-(setq markdown-command "~/.emacs.d/scripts/markdown-wrapper.sh")
+; (setq c-offsets-alist '((innamespace . [0])))
+
+(load-file "~/.emacs.d/google-c-style.el")
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
 
 ; Markdown
 ; ========
+(setq markdown-command "~/.emacs.d/scripts/markdown-wrapper.sh")
 (require 'markdown-mode)
 (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
 (setq markdown-enable-math t)
