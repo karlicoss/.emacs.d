@@ -15,7 +15,7 @@
 (defvar my-packages '(starter-kit evil haskell-mode ghc markdown-mode auto-complete) "List of packages to be downloaded")
 ; TODO flymake-haskell-multi is not working at the moment for some reason (looks like MELPA's problem)
 
-; running installation (pretty like 'apt-get install')
+; running installation (pretty much like 'apt-get install')
 (dolist (p my-packages) (when (not (package-installed-p p)) (package-install p)))
 
 
@@ -85,6 +85,7 @@
 ; ===
 
 (load-file "/L/soft/ProofGeneral-4.2/generic/proof-site.el")
+(setq coq-prog-name "/L/soft/coq-8.4/bin/coqtop")
 
 ; C/C++
 ; =====
