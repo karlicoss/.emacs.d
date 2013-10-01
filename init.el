@@ -25,6 +25,9 @@
 ; line numbers
 (global-linum-mode t)
 
+; auto update buffer on file change
+(global-auto-revert-mode t)
+
 ; show matching parentheses
 (show-paren-mode t)
 
@@ -99,7 +102,7 @@
 ; }
 ; (setq c-offsets-alist '((innamespace . [0])))
 
-(load-file "~/.emacs.d/google-c-style.el")
+; (load-file "~/.emacs.d/google-c-style.el")
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
