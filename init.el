@@ -19,8 +19,18 @@
 (dolist (p my-packages) (when (not (package-installed-p p)) (package-install p)))
 
 
+; TODO
+(add-to-list 'load-path "~/.emacs.d/plugins/predictive")
+(add-to-list 'load-path "~/.emacs.d/plugins/predictive/latex")
+(autoload 'predictive-mode "predictive" "predictive" t)
+; (set-default 'predictive-auto-add-to-dict t)
+
 ; Some useful stuff
 ; =================
+; (require 'predictive) TODO how to run by default? :(((
+; (predictive-mode 1)
+; (add-hook 'predictive-mode-hook 
+; (global-set-key (kbd "TAB") 'completion-show-popup-tip) ; TODO predictive mode hook
 
 ; line numbers
 (global-linum-mode t)
@@ -32,13 +42,18 @@
 (show-paren-mode t)
 
 ; words auto completion
-(require 'auto-complete)
-(global-auto-complete-mode t)
+; (require 'auto-complete)
+; (global-auto-complete-mode t)
 
 ; TODO what that one for?
 ; regular auto-complete initialization
-(require 'auto-complete-config)
-(ac-config-default)
+; (require 'auto-complete-config)
+; (ac-config-default)
+
+; TODO
+;
+;(eval-after-load 'predictive-mode
+;                 '(define-key 
 
 ; evil 
 (require 'evil)
@@ -71,7 +86,7 @@
 
   ; you'll need to change this variable to your agda stdlib location
   ; you could just comment this line as well
-  (add-hook 'agda2-mode-hook (lambda () (setq agda2-include-dirs (quote ("." "/L/soft/agda2-lib")))))
+  (add-hook 'agda2-mode-hook (lambda () (setq agda2-include-dirs (quote ("." "/L/soft/agda2-lib/lib-0.7/src")))))
 )
 
 ; Haskell
