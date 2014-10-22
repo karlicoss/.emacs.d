@@ -20,9 +20,9 @@
 
 
 ; TODO
-(add-to-list 'load-path "~/.emacs.d/plugins/predictive")
-(add-to-list 'load-path "~/.emacs.d/plugins/predictive/latex")
-(autoload 'predictive-mode "predictive" "predictive" t)
+; (add-to-list 'load-path "~/.emacs.d/plugins/predictive")
+; (add-to-list 'load-path "~/.emacs.d/plugins/predictive/latex")
+; (autoload 'predictive-mode "predictive" "predictive" t)
 ; (set-default 'predictive-auto-add-to-dict t)
 
 ; Some useful stuff
@@ -42,8 +42,8 @@
 (show-paren-mode t)
 
 ; words auto completion
-; (require 'auto-complete)
-; (global-auto-complete-mode t)
+(require 'auto-complete)
+(global-auto-complete-mode t)
 
 ; TODO what that one for?
 ; regular auto-complete initialization
@@ -103,11 +103,11 @@
 
 ; Coq
 ; ===
-(setq use-coq nil)
+(setq use-coq t)
 
 (when use-coq
-  (load-file "/L/soft/ProofGeneral-4.2/generic/proof-site.el")
-  (setq coq-prog-name "/L/soft/coq-8.4/bin/coqtop")
+  (load-file "/L/soft/ProofGeneral/generic/proof-site.el")
+  ; (setq coq-prog-name "/L/soft/coq/bin/coqtop")
 )
 
 ; C/C++
