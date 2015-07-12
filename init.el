@@ -74,65 +74,12 @@
 ; (setq whitespace-style '(face empty tabs lines-tail trailing))
 ; (global-whitespace-mode t)
 
-; Agda
-; ====
-(setq use-agda t)
+(load-file "~/.emacs.d/agda.el")
 
-(when use-agda
-  (load-file (let ((coding-system-for-read 'utf-8))
-                   (shell-command-to-string "agda-mode locate")))
-  ; you'll definitely need this line to work both in evil-mode and agda-mode
-  (add-hook 'agda2-mode-hook (lambda () (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))))
+(load-file "~/.emacs.d/haskell.el")
 
-  ; you'll need to change this variable to your agda stdlib location
-  ; you could just comment this line as well
-  (add-hook 'agda2-mode-hook (lambda () (setq agda2-include-dirs (quote ("." "/L/soft/agda2-lib/lib-0.7/src")))))
-)
+(load-file "~/.emacs.d/coq.el")
 
-; Haskell
-; =======
+(load-file "~/.emacs.d/cpp.el")
 
-; 'cabal install ghc-mod' to make it work
-(autoload 'ghc-init "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
-
-(require 'haskell-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-
-(add-to-list 'load-path "~/.emacs.d/plugins/emacs-haskell-unicode-input-method")
-
-; Coq
-; ===
-(setq use-coq t)
-
-(when use-coq
-  (load-file "/L/soft/ProofGeneral/generic/proof-site.el")
-  ; (setq coq-prog-name "/L/soft/coq/bin/coqtop")
-)
-
-; C/C++
-; =====
-
-; (setq c-default-style "bsd" c-basic-offset 4)
-; prevents c++ mode from indenting code in namespace definition
-; that is, allows
-; namespace myns
-; {
-; int somefun()... // this line will not be indented
-; }
-; (setq c-offsets-alist '((innamespace . [0])))
-
-; (load-file "~/.emacs.d/google-c-style.el")
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
-
-
-; Markdown
-; ========
-(setq markdown-command "~/.emacs.d/scripts/markdown-wrapper.sh")
-(require 'markdown-mode)
-(autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
-(setq markdown-enable-math t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(load-file "~/.emacs.d/markdown.el")
