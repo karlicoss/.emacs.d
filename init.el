@@ -5,7 +5,9 @@
 ; it should be built-in in you distro emacs installation
 (require 'package)
 ; melpa is one of the package repositories for emacs packages
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")))
 (package-initialize)
 
 ; updating packages index (pretty like 'apt-get update')
